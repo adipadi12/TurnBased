@@ -6,8 +6,8 @@ using UnityEngine.Rendering;
 public class UnitMovement : MonoBehaviour
 {
     private Vector3 targetPos;
-    public float moveSpeed = 4f;
-    public float stoppingValue = 0.1f;
+    [SerializeField]private float moveSpeed = 4f;
+    [SerializeField]private float stoppingValue = 0.1f;
     private void Update()
     {
         if (Vector3.Distance(transform.position, targetPos) > stoppingValue)// setting an offset for stopping distance
@@ -16,14 +16,20 @@ public class UnitMovement : MonoBehaviour
 
             transform.position += moveDir * moveSpeed * Time.deltaTime; //updating transform.positon frame independently
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetMouseButtonDown(0))
         {
+            //targetPos = MouseWorldPos.GetPosition(); //instead of this we have a move function defined to get targetPos defined as this
+            Move(MouseWorldPos.GetPosition());
+        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
             
            
-                Move(new Vector3(0, 0, 5));
-                Debug.Log("Moving");
+        //        Move(new Vector3(0, 0, 5));
+        //        Debug.Log("Moving");
             
-        }
+        //}
+        
     }
     private void Move(Vector3 targetPos)
     {
