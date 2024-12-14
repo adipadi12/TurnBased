@@ -12,7 +12,7 @@ public class UnitSelector : MonoBehaviour
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
 
-    private void Awake()
+    private void Awake() //awake typically used for initializing (this)
     {
         if (Instance != null)
         {
@@ -20,7 +20,7 @@ public class UnitSelector : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        Instance = this; //usecase of singleton pattern 
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class UnitSelector : MonoBehaviour
         selectedUnit = unit;
         
         OnSelectedUnitChange?.Invoke(this, EventArgs.Empty); //? checks if null or not and then the event is invoked. does same shit as below 4 lines
-
+        //does not care if ay event is subscribed to it or not
         //if (OnSelectedUnitChange != null)
         //{
         //    OnSelectedUnitChange(this, EventArgs.Empty);
@@ -66,6 +66,6 @@ public class UnitSelector : MonoBehaviour
 
     public UnitMovement GetSelectedUnit()
     {
-        return selectedUnit;
+        return selectedUnit; //retrieving the selected unit
     }
 }

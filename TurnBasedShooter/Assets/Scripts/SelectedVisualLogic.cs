@@ -14,19 +14,20 @@ public class SelectedVisualLogic : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    private void Start()
+    private void Start() //start used when have to give a reference to objects outside of the class
+        //helps avoid errors between calling of Start and Awake
     {
-        UnitSelector.Instance.OnSelectedUnitChange += UnitSelector_OnSelectedUnitChange;
+        UnitSelector.Instance.OnSelectedUnitChange += UnitSelector_OnSelectedUnitChange; //subscribing to event
 
         UpdateVisual();
     }
 
-    private void UnitSelector_OnSelectedUnitChange(object sender, EventArgs empty)
+    private void UnitSelector_OnSelectedUnitChange(object sender, EventArgs empty) //creating the subscriber
     {
         UpdateVisual();
     }
 
-    private void UpdateVisual()
+    private void UpdateVisual() //added to another function to make sure it runs during the start of the script
     {
         if (UnitSelector.Instance.GetSelectedUnit() == unit)
         {
