@@ -13,15 +13,15 @@ public class MouseWorldPos : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
-    {
-        //Debug.Log(Input.mousePosition); //returns pixel coordinates of the mouse in the game window
+    //private void Update()
+    //{
+    //    //Debug.Log(Input.mousePosition); //returns pixel coordinates of the mouse in the game window
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //ray stored shooting a ray from the main camera to the mouse position in the game window
-        Debug.Log(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, floorMask)); //returns true or false if anything with a collider is being hit or not
-        //also defined the max distance till where raycast is done and floormask added from the inspector to detect only floor
-        transform.position = raycastHit.point;  //changes glowing sphere's position to where the raycast is hitting in the game window
-    }
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //ray stored shooting a ray from the main camera to the mouse position in the game window
+    //    Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, floorMask); //returns true or false if anything with a collider is being hit or not
+    //    //also defined the max distance till where raycast is done and floormask added from the inspector to detect only floor
+    //    transform.position = raycastHit.point;  //changes glowing sphere's position to where the raycast is hitting in the game window
+    //}
 
     public static Vector3 GetPosition()  //static because belongs to the class and not to any instance of it
     {
