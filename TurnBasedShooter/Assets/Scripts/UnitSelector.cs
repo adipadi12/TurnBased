@@ -1,11 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitSelector : MonoBehaviour
 {
+    public static UnitSelector Instance { get; private set; } //property used to separate get and set and pascal case used here
+    //property can only be set by this class but read by any other class
+    public event EventHandler OnSelectedUnitChange; //works with any delegate but EventHandler is the C# standard
+
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("There's more than one UnitSelector!!!! " + transform + " - " + Instance);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     private void Update()
     {
@@ -24,7 +40,7 @@ public class UnitSelector : MonoBehaviour
         {
             if(raycastHit.transform.TryGetComponent<UnitMovement>(out UnitMovement unitMovement))  // returns a bool value while searching for component
             {
-                selectedUnit = unitMovement;
+                SetSelectedUnit(unitMovement);
                 return true;
             }
 
@@ -34,5 +50,22 @@ public class UnitSelector : MonoBehaviour
             //}
         } 
         return false;
+    }
+
+    private void SetSelectedUnit(UnitMovement unit)
+    {
+        selectedUnit = unit;
+        
+        OnSelectedUnitChange?.Invoke(this, EventArgs.Empty); //? checks if null or not and then the event is invoked. does same shit as below 4 lines
+
+        //if (OnSelectedUnitChange != null)
+        //{
+        //    OnSelectedUnitChange(this, EventArgs.Empty);
+        //}
+    }
+
+    public UnitMovement GetSelectedUnit()
+    {
+        return selectedUnit;
     }
 }
