@@ -28,9 +28,9 @@ public class GridSys //Monobehavior removed because we need constructor for grid
         }
     }
 
-    public Vector3 GetWorldPosition(int x, int z) //to change grid coordinates to real world coordinates
+    public Vector3 GetWorldPosition(GridPosition gridPosition) //to change grid coordinates to real world coordinates
     {
-        return new Vector3(x, 0 , z) * cellSize; //gets world position by multiplying grid size with cell size
+        return new Vector3(gridPosition.x, 0 , gridPosition.z) * cellSize; //gets world position by multiplying grid size with cell size
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition)
@@ -46,9 +46,17 @@ public class GridSys //Monobehavior removed because we need constructor for grid
         {
             for (int z = 0; z < height; z++)
             {
-                GameObject.Instantiate(debugPrefab, GetWorldPosition(x,z), Quaternion.identity); //identity means no roatation
+                GridPosition gridPosition = new GridPosition(x,z);
+                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity); //identity means no roatation
                     //here Instantiate cannot be directly used because the class is inherited from MonoBehavior
+                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
+                gridDebugObject.SetGridObject(GetGridObj(gridPosition));
             }
         }
+    }
+
+    public GridObj GetGridObj(GridPosition gridPosition)
+    {
+        return gridObjectArray[gridPosition.x, gridPosition.z];
     }
 }
