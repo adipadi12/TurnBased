@@ -42,4 +42,14 @@ public struct GridPosition : IEquatable<GridPosition>//structs are used when we 
     public static bool operator != (GridPosition a, GridPosition b) {
         return !(a == b);  //defining this in the struct so we can compare in the unit script
     }
+
+    public static GridPosition operator +(GridPosition a, GridPosition b)
+    {
+        return new GridPosition(a.x + b.x, a.z + b.z);
+    }
+
+    public static GridPosition operator -(GridPosition a, GridPosition b)
+    {
+        return new GridPosition(a.x - b.x, a.z - b.z);
+    }
 }

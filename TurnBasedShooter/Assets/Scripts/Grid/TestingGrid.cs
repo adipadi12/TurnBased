@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestingGrid : MonoBehaviour
 {
-    
+    [SerializeField] private UnitMovement unit;
     private void Start()
     {
      //   gridSystem = new GridSys(10,10, 2f); //calling the gridsys constructor here for testing since this script is attached to a game object
@@ -16,5 +16,9 @@ public class TestingGrid : MonoBehaviour
     private void Update()
     {
         //Debug.Log(gridSystem.GetGridPosition(MouseWorldPos.GetPosition())); //calling the function to getGridPosition of where the mouse is in the world
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            unit.GetMoveAction().GetValidActionGridPositionList();
+        }
     }
 }

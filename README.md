@@ -9,3 +9,4 @@ game made on unity
 4. Prefabs cannot reference objects in the scene for which reason we can't use [SerializeField] on prefabs but will have to use singleton pattern instead 
 to reference out Event action
 5. need to invest more time learning events and the singleton pattern
+6. references to different scripts made inside classes to make refactoring code easy

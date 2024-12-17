@@ -29,7 +29,7 @@ public class UnitSelector : MonoBehaviour
         {
             if (TryHandleSelection()) return; //if unit selected no need to move it to raycast position on floor so it just ends function here
             //targetPos = MouseWorldPos.GetPosition(); //instead of this we have a move function defined to get targetPos defined as this
-            selectedUnit.Move(MouseWorldPos.GetPosition());
+            selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
         }
     } 
 
