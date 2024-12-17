@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 public class UnitMovement : MonoBehaviour
 {
     private Vector3 targetPos;
+
+    private GridPosition gridPosition;
     [SerializeField]private float moveSpeed = 4f;
     [SerializeField]private float stoppingValue = 0.1f;
     [SerializeField] private float rotateSpeed = 0.5f;
@@ -15,6 +17,11 @@ public class UnitMovement : MonoBehaviour
     private void Awake()
     {
         targetPos = transform.position;
+    }
+    private void Start()
+    {
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.AddUnitAtGridPos(gridPosition, this);
     }
     private void Update()
     {
@@ -31,17 +38,24 @@ public class UnitMovement : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
+        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        if (newGridPosition != gridPosition)//for this reason had to define streuct in GridPosition.cs
+        {
+            //Unit changed Grid Position
+            LevelGrid.Instance.UnitMovedGridPosition(this, gridPosition, newGridPosition);
+            gridPosition = newGridPosition;
+        }
 
-        
+
         //if (Input.GetKeyDown(KeyCode.T))
         //{
-            
-           
+
+
         //        Move(new Vector3(0, 0, 5));
         //        Debug.Log("Moving");
-            
+
         //}
-        
+
     }
     public void Move(Vector3 targetPos)
     {

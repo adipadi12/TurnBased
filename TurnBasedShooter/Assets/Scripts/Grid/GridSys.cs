@@ -49,14 +49,14 @@ public class GridSys //Monobehavior removed because we need constructor for grid
                 GridPosition gridPosition = new GridPosition(x,z);
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity); //identity means no roatation
                     //here Instantiate cannot be directly used because the class is inherited from MonoBehavior
-                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridObject(GetGridObj(gridPosition));
+                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();  //getting the grid debug object component
+                gridDebugObject.SetGridObject(GetGridObj(gridPosition));   //setting grid object as get grid object's object position
             }
         }
     }
 
     public GridObj GetGridObj(GridPosition gridPosition)
     {
-        return gridObjectArray[gridPosition.x, gridPosition.z];
+        return gridObjectArray[gridPosition.x, gridPosition.z];  //getting the grid object to get us the x and z position for debugging
     }
 }

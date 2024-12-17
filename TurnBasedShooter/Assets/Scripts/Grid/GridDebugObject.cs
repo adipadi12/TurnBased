@@ -9,13 +9,13 @@ public class GridDebugObject : MonoBehaviour
     private TMP_Text textMeshPro;
 
     private GridObj gridObject;
-    public void SetGridObject(GridObj gridObject) 
+    public void SetGridObject(GridObj gridObject)   //another constructor for grid object setting
     { 
         this.gridObject = gridObject;
     }
 
     private void Update()
     {
-        textMeshPro.text = gridObject.ToString();
+        textMeshPro.text = gridObject.ToString(); //updating the values inside textmeshpro to get shit done
     }
 }
