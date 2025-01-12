@@ -55,6 +55,20 @@ public class MoveAction : MonoBehaviour
             {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition; //custom struct so had to make operators allow
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                {
+                    continue;
+                }
+                if (unitGridPosition == testGridPosition)
+                {
+                    //unit can't move into the same position where it already is
+                    continue;
+                }
+                //unit can't move into grid where other unit is already present
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
+                {
+                    continue;
+                }
                 //adding of these 2 positions
                 Debug.Log(testGridPosition);
             }

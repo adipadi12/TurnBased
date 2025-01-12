@@ -59,4 +59,12 @@ public class GridSys //Monobehavior removed because we need constructor for grid
     {
         return gridObjectArray[gridPosition.x, gridPosition.z];  //getting the grid object to get us the x and z position for debugging
     }
+
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition.x >= 0 && 
+               gridPosition.z >= 0 && 
+               gridPosition.x < width && 
+               gridPosition.z < height;
+    }
 }
