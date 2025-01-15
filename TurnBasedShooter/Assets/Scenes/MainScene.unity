@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2aaeef2a3d88c46858bfadb131973f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSystemVisualSinglePrefab: {fileID: 0}
+  gridSystemVisualSinglePrefab: {fileID: 1475467466107632540, guid: d6ef8accae407c942be120cbe7c84ad8,
+    type: 3}
 --- !u!4 &327160118
 Transform:
   m_ObjectHideFlags: 0
@@ -229,7 +230,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50.93
+  field of view: 50.61
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -255,13 +256,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3006394, y: -0.000000016410377, z: 0.000000005172915, w: 0.9537379}
-  m_LocalPosition: {x: 0, y: 7, z: -10}
+  m_LocalRotation: {x: 0.31216815, y: -0.117115974, z: 0.038811687, w: 0.9419812}
+  m_LocalPosition: {x: 2.71, y: 8.24, z: -10.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 41.455, y: -9.662, z: -3.248}
+  m_LocalEulerAnglesHint: {x: 35.5, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,7 +591,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 884116275}
   m_Follow: {fileID: 884116275}
   m_Lens:
-    FieldOfView: 50.93
+    FieldOfView: 50.61
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -616,14 +617,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892622263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3006394, y: -0.000000016410377, z: 0.000000005172915, w: 0.9537379}
-  m_LocalPosition: {x: 0, y: 7, z: -10}
+  m_LocalRotation: {x: 0.31216815, y: -0.117115974, z: 0.038811687, w: 0.9419812}
+  m_LocalPosition: {x: 2.71, y: 8.24, z: -10.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1395156385}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.2, y: 0, z: 0}
 --- !u!114 &1132977591 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5932092923152841631, guid: 63cc26d39480f4249bc913f2c0783583,
@@ -722,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 7, z: -10}
+  m_FollowOffset: {x: 2.71, y: 8.24, z: -10.73}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1183,6 +1184,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7472701281217047332, guid: 63cc26d39480f4249bc913f2c0783583,
+        type: 3}
+      propertyPath: maxMoveDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7187079273900220319, guid: 63cc26d39480f4249bc913f2c0783583,
         type: 3}
       propertyPath: m_LocalPosition.x

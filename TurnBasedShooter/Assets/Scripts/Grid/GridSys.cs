@@ -67,4 +67,13 @@ public class GridSys //Monobehavior removed because we need constructor for grid
                gridPosition.x < width && 
                gridPosition.z < height;
     }
+
+    public int GetWidht()
+    {
+        return width;
+    }
+    public int GetHeight() 
+        { 
+        return height;
+    }
 }

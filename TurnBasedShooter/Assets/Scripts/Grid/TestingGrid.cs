@@ -18,7 +18,9 @@ public class TestingGrid : MonoBehaviour
         //Debug.Log(gridSystem.GetGridPosition(MouseWorldPos.GetPosition())); //calling the function to getGridPosition of where the mouse is in the world
         if (Input.GetKeyDown(KeyCode.T))
         {
-            unit.GetMoveAction().GetValidActionGridPositionList();
+            GridSystemVisual.Instance.HideAllGridPosition();
+            GridSystemVisual.Instance.ShowGridPositionList(
+                unit.GetMoveAction().GetValidActionGridPositionList());
         }
     }
 }
