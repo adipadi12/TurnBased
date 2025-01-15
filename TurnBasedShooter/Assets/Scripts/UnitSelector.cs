@@ -29,7 +29,12 @@ public class UnitSelector : MonoBehaviour
         {
             if (TryHandleSelection()) return; //if unit selected no need to move it to raycast position on floor so it just ends function here
             //targetPos = MouseWorldPos.GetPosition(); //instead of this we have a move function defined to get targetPos defined as this
-            selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorldPos.GetPosition());
+
+            if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition)) {
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
+            //selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
         }
     } 
 
