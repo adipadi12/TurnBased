@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingValue = 0.1f;
@@ -13,34 +13,43 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private int maxMoveDistance = 4;
 
     private Vector3 targetPos;
-    private UnitMovement unit;
-
-    private void Awake()
+    
+    protected override void Awake()
     {
-        unit = GetComponent<UnitMovement>();
+       // unit = GetComponent<UnitMovement>();
+        base.Awake(); //calls the awake function from the base class first and then can override it to use targetPos
         targetPos = transform.position;
     }
     // Start is called before the first frame update
     private void Update()
     {
+        if (!isActive)
+        {
+            return;
+        } 
+        Vector3 moveDir = (targetPos - transform.position).normalized; //we just need the direction so we normalize it we don't need magnitude
+
         if (Vector3.Distance(transform.position, targetPos) > stoppingValue)// setting an offset for stopping distance
         {
-            Vector3 moveDir = (targetPos - transform.position).normalized; //we just need the direction so we normalize it we don't need magnitude
 
             transform.position += moveDir * moveSpeed * Time.deltaTime; //updating transform.positon frame independently
-            transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //smoothening of the look direction of character
 
             animator.SetBool("isWalking", true);
         }
         else
         {
             animator.SetBool("isWalking", false);
+            isActive = false;
         }
+
+        transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //smoothening of the look direction of character
+
     }
 
     public void Move(GridPosition gridPosition)
     {
         this.targetPos = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        isActive = true;
     }
 
     public bool IsValidActionGridPosition(GridPosition gridPosition)

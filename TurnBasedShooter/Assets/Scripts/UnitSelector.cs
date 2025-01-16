@@ -12,6 +12,7 @@ public class UnitSelector : MonoBehaviour
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
 
+    private bool isBusy;
     private void Awake() //awake typically used for initializing (this)
     {
         if (Instance != null)
@@ -27,16 +28,37 @@ public class UnitSelector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (isBusy)
+            {
+                return;
+            }
             if (TryHandleSelection()) return; //if unit selected no need to move it to raycast position on floor so it just ends function here
             //targetPos = MouseWorldPos.GetPosition(); //instead of this we have a move function defined to get targetPos defined as this
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorldPos.GetPosition());
 
             if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition)) {
+                SetBusy();
                 selectedUnit.GetMoveAction().Move(mouseGridPosition);
             }
             //selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            SetBusy();
+            selectedUnit.GetSpinAction().Spin(ClearBusy); //calling clear busy here using a delegate in spin which will restore unit's busy state after a movement us done
+        }
     } 
+
+    private void SetBusy()
+    {
+        isBusy = true;
+    }
+
+    private void ClearBusy()
+    {
+        isBusy = false;
+    }
 
     private bool TryHandleSelection()
     {
