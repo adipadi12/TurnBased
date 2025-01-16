@@ -38,7 +38,7 @@ public class UnitSelector : MonoBehaviour
 
             if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition)) {
                 SetBusy();
-                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+                selectedUnit.GetMoveAction().Move(mouseGridPosition, ClearBusy);
             }
             //selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
         }

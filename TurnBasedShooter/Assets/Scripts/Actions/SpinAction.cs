@@ -1,13 +1,13 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpinAction : BaseAction
 {
-    public delegate void SpinCompleteDelegate(); //stores a function as a variable v powerful
+    //public delegate void SpinCompleteDelegate(); //stores a function as a variable v powerful
 
     private float totalSpinAmount;
-    private SpinCompleteDelegate onSpinComplete;
 
     private void Update()
     {
@@ -22,13 +22,13 @@ public class SpinAction : BaseAction
         if (totalSpinAmount >= 360f) //after one rtation the unit stops spinning
         {
             isActive = false;
-            onSpinComplete();
+            onActionComplete();
         }
     }
 
-    public void Spin(SpinCompleteDelegate onSpinComplete)
+    public void Spin(Action onActionComplete)
     {
-        this.onSpinComplete = onSpinComplete;
+        this.onActionComplete = onActionComplete;
         isActive = true;
         totalSpinAmount = 0f;
     }
