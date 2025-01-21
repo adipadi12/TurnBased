@@ -12,6 +12,7 @@ public class UnitSelector : MonoBehaviour
 
     public event EventHandler OnSelectedUnitChange; //works with any delegate but EventHandler is the C# standard
     public event EventHandler OnSelectedActionChange; 
+    public event EventHandler<bool> OnBusyChange;
 
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
@@ -90,11 +91,15 @@ public class UnitSelector : MonoBehaviour
     private void SetBusy()
     {
         isBusy = true;
+
+        OnBusyChange?.Invoke(this, isBusy);
     }
 
     private void ClearBusy()
     {
         isBusy = false;
+
+        OnBusyChange?.Invoke(this, isBusy);
     }
 
     private bool TryHandleSelection()
