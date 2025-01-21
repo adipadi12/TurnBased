@@ -9,7 +9,9 @@ public class UnitSelector : MonoBehaviour
 {
     public static UnitSelector Instance { get; private set; } //property used to separate get and set and pascal case used here
     //property can only be set by this class but read by any other class
+
     public event EventHandler OnSelectedUnitChange; //works with any delegate but EventHandler is the C# standard
+    public event EventHandler OnSelectedActionChange; 
 
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
@@ -138,6 +140,7 @@ public class UnitSelector : MonoBehaviour
     public void SetSelectedAction(BaseAction baseAction)
     {
         selectedAction = baseAction; //we can access this script in the UI function now
+        OnSelectedActionChange?.Invoke(this, EventArgs.Empty);
     }
 
     public UnitMovement GetSelectedUnit()
