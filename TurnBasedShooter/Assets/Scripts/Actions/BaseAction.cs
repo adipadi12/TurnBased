@@ -16,5 +16,16 @@ public abstract class BaseAction : MonoBehaviour //doesn't allow creating instan
         unit = GetComponent<UnitMovement>();
     }
 
-    public abstract string GetActionName();
+    public abstract string GetActionName(); //enforce every action will implement this function
+
+    public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+
+    public bool IsValidActionGridPosition(GridPosition gridPosition) 
+    {
+        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+        return validGridPositionList.Contains(gridPosition); //checking if the value is present in the list or not
+    }
+
+    public abstract List<GridPosition> GetValidActionGridPositionList();
+    
 }

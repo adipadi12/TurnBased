@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 public class UnitSelector : MonoBehaviour
 {
@@ -46,7 +47,10 @@ public class UnitSelector : MonoBehaviour
 
 
         //selectedUnit.GetMoveAction().Move(MouseWorldPos.GetPosition());
-    
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
 
         HandleSelectedAction();
     }
@@ -57,21 +61,28 @@ public class UnitSelector : MonoBehaviour
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorldPos.GetPosition());
 
-            switch (selectedAction)
+            if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
-                case MoveAction moveAction:
-                    if (moveAction.IsValidActionGridPosition(mouseGridPosition))
-                    {
-                        SetBusy();
-                        moveAction.Move(mouseGridPosition, ClearBusy);
-                    }
-                    break;
-                case SpinAction spinAction:
-                    SetBusy();
-                    //selectedUnit.GetSpinAction().Spin(ClearBusy); //calling clear busy here using a delegate in spin which will restore unit's busy state after a movement us done
-                    spinAction.Spin(ClearBusy);
-                    break;
+                SetBusy();
+                selectedAction.TakeAction(mouseGridPosition, ClearBusy); //method using generic tick action
             }
+
+            //switch (selectedAction)
+            //{
+            //    case MoveAction moveAction:
+            //        if (moveAction.IsValidActionGridPosition(mouseGridPosition))
+            //        {
+            //            SetBusy();
+            //            moveAction.Move(mouseGridPosition, ClearBusy);
+            //        }
+            //        break;
+            //    case SpinAction spinAction:
+            //        SetBusy();
+            //        //selectedUnit.GetSpinAction().Spin(ClearBusy); //calling clear busy here using a delegate in spin which will restore unit's busy state after a movement us done
+            //        spinAction.Spin(ClearBusy);
+            //        break;
+            //}
+            //uses switch
         }
     }
     private void SetBusy()
@@ -93,6 +104,10 @@ public class UnitSelector : MonoBehaviour
             {
                 if (raycastHit.transform.TryGetComponent<UnitMovement>(out UnitMovement unitMovement))  // returns a bool value while searching for component
                 {
+                    if (unitMovement == selectedUnit)
+                    {
+                        return false;
+                    }
                     SetSelectedUnit(unitMovement);
                     return true;
                 }
@@ -128,5 +143,10 @@ public class UnitSelector : MonoBehaviour
     public UnitMovement GetSelectedUnit()
     {
         return selectedUnit; //retrieving the selected unit
+    }
+
+    public BaseAction GetSelectedAction()
+    {
+        return selectedAction;
     }
 }
