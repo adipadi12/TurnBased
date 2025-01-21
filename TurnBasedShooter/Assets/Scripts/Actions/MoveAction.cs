@@ -94,4 +94,9 @@ public class MoveAction : BaseAction
 
         return validGridPositionList;
     }
+
+    public override string GetActionName() //overriding the abstract function defined in baseaction class to get strings of each movement
+    {
+        return "Move";
+    }
 }

@@ -15,4 +15,6 @@ public abstract class BaseAction : MonoBehaviour //doesn't allow creating instan
     {
         unit = GetComponent<UnitMovement>();
     }
+
+    public abstract string GetActionName();
 }
