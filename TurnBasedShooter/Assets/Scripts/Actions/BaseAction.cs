@@ -27,5 +27,10 @@ public abstract class BaseAction : MonoBehaviour //doesn't allow creating instan
     }
 
     public abstract List<GridPosition> GetValidActionGridPositionList();
+
+    public virtual int GetActionPointsCost() //action points cost made virtual so overriden in spin and move class
+    {
+        return 1;
+    }
     
 }

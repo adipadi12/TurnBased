@@ -9,7 +9,7 @@ public class UnitMovement : MonoBehaviour
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
-
+    private int actionPoints = 2;
 
     private void Awake()
     {
@@ -64,4 +64,35 @@ public class UnitMovement : MonoBehaviour
     {
         return baseActionArray;
     }
+
+    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction) //function checks if spending of points is allowed or not
+    {
+        if (CanSpendActionPointsToTakeAction(baseAction))
+        {
+            SpendActionPoints(baseAction.GetActionPointsCost());
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool CanSpendActionPointsToTakeAction(BaseAction baseAction) //action points defined
+    {
+        if (actionPoints >= baseAction.GetActionPointsCost())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void SpendActionPoints(int amount)
+    {
+        actionPoints -= amount;
+    }
+
+    public int GetActionPoints() { return actionPoints; } //exposing action points so it can be used in the UI script
 }

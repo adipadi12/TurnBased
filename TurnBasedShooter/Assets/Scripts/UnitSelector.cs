@@ -13,6 +13,7 @@ public class UnitSelector : MonoBehaviour
     public event EventHandler OnSelectedUnitChange; //works with any delegate but EventHandler is the C# standard
     public event EventHandler OnSelectedActionChange; 
     public event EventHandler<bool> OnBusyChange;
+    public event EventHandler OnActionStarted; //another event to handle exposing the action points for UI to use
 
     [SerializeField] private UnitMovement selectedUnit;
     [SerializeField] private LayerMask unitMask;
@@ -66,8 +67,12 @@ public class UnitSelector : MonoBehaviour
 
             if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
-                SetBusy();
-                selectedAction.TakeAction(mouseGridPosition, ClearBusy); //method using generic tick action
+                if (selectedUnit.TrySpendActionPointsToTakeAction(selectedAction)) //checking if unit has enough points to spend on a particular action
+                {
+                    SetBusy();
+                    selectedAction.TakeAction(mouseGridPosition, ClearBusy); //method using generic tick action
+                    OnActionStarted?.Invoke(this, EventArgs.Empty);
+                }
             }
 
             //switch (selectedAction)

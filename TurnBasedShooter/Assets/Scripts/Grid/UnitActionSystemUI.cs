@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class UnitActionSystemUI : MonoBehaviour
 {
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform actionButtonContainerTransform;
+    [SerializeField] private TextMeshProUGUI actionPointsText;
 
     private List<ActionButtonUI> actionButtonList;
 
@@ -23,7 +25,9 @@ public class UnitActionSystemUI : MonoBehaviour
         //an event that reads changing of unit on selection. we used that event and created an action function
         //in which we pass the same function of creating a unit action button
         UnitSelector.Instance.OnSelectedActionChange += UnitSelector_OnSelectedActionChange;
+        UnitSelector.Instance.OnActionStarted += UnitSelector_OnActionStarted;
 
+        UpdateActionPoints();
         CreateUnitActionButton();
         UpdateSelectedVisual();
     }
@@ -53,11 +57,17 @@ public class UnitActionSystemUI : MonoBehaviour
     {
         CreateUnitActionButton();
         UpdateSelectedVisual();
+        UpdateActionPoints();
     }
 
     private void UnitSelector_OnSelectedActionChange(object sender, EventArgs e)
     {
         UpdateSelectedVisual();
+    }
+
+    private void UnitSelector_OnActionStarted(object sender, EventArgs e)
+    {
+        UpdateActionPoints();
     }
 
     private void UpdateSelectedVisual()
@@ -66,5 +76,11 @@ public class UnitActionSystemUI : MonoBehaviour
         {
             actionButtonUI.UpdateSelectedVisual(); //updates the border of the button
         }
+    }
+
+    private void UpdateActionPoints()
+    {
+        UnitMovement selectedUnit = UnitSelector.Instance.GetSelectedUnit();
+        actionPointsText.text = "Action Points: " + selectedUnit.GetActionPoints(); //updates action points
     }
 }
