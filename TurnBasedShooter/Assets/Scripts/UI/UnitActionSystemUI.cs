@@ -26,6 +26,8 @@ public class UnitActionSystemUI : MonoBehaviour
         //in which we pass the same function of creating a unit action button
         UnitSelector.Instance.OnSelectedActionChange += UnitSelector_OnSelectedActionChange;
         UnitSelector.Instance.OnActionStarted += UnitSelector_OnActionStarted;
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        UnitMovement.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
 
         UpdateActionPoints();
         CreateUnitActionButton();
@@ -82,5 +84,15 @@ public class UnitActionSystemUI : MonoBehaviour
     {
         UnitMovement selectedUnit = UnitSelector.Instance.GetSelectedUnit();
         actionPointsText.text = "Action Points: " + selectedUnit.GetActionPoints(); //updates action points
+    }
+
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
+    {
+        UpdateActionPoints();
+    }
+
+    private void Unit_OnAnyActionPointsChanged(object sender, EventArgs e)
+    {
+        UpdateActionPoints();
     }
 }
