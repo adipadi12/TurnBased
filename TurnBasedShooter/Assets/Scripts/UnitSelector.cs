@@ -43,6 +43,11 @@ public class UnitSelector : MonoBehaviour
         {
             return;
         }
+
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
         if (TryHandleSelection())
         {
             return;
@@ -117,6 +122,11 @@ public class UnitSelector : MonoBehaviour
                 if (raycastHit.transform.TryGetComponent<UnitMovement>(out UnitMovement unitMovement))  // returns a bool value while searching for component
                 {
                     if (unitMovement == selectedUnit)
+                    {
+                        return false;
+                    }
+
+                    if (unitMovement.IsEnemy())
                     {
                         return false;
                     }
