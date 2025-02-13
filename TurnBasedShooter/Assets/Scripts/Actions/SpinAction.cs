@@ -21,15 +21,13 @@ public class SpinAction : BaseAction
         totalSpinAmount += spinAddAmount;
         if (totalSpinAmount >= 360f) //after one rtation the unit stops spinning
         {
-            isActive = false;
-            onActionComplete();
+            ActionComplete();
         }
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) //grid position isn't used but since it is abstract in the base class and overriden here
     {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
         totalSpinAmount = 0f;
     }
 

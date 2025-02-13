@@ -40,8 +40,7 @@ public class MoveAction : BaseAction
         else
         {
             animator.SetBool("isWalking", false);
-            isActive = false;
-            onActionComplete(); //so the logic of no active actions present works here as well
+            ActionComplete(); //so the logic of no active actions present works here as well
         }
 
         transform.forward = Vector3.Lerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed); //smoothening of the look direction of character
@@ -50,9 +49,8 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
         this.targetPos = LevelGrid.Instance.GetWorldPosition(gridPosition);
-        isActive = true;
     }
 
     

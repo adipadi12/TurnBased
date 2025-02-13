@@ -18,7 +18,8 @@ public class GridObj
     public override string ToString()
     {
         string unitString = "";
-        foreach (UnitMovement unit in unitList) { 
+        foreach (UnitMovement unit in unitList)
+        {
             unitString += unit + "\n";
         }
         return gridPosition.ToString() + "\n" + unitString;  //overriding to string so x and z values can be used by text mesh pro
@@ -42,5 +43,17 @@ public class GridObj
     public bool HasAnyUnit()
     {
         return unitList.Count > 0;
+    }
+
+    public UnitMovement GetUnitListIndex()
+    {
+        if (HasAnyUnit())
+        {
+            return unitList[0];
+        }
+        else
+        {
+            return null;
+        }
     }
 }
