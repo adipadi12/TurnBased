@@ -38,4 +38,10 @@ public class SelectedVisualLogic : MonoBehaviour
             meshRenderer.enabled = false;
         }
     }
+
+    private void OnDestroy()
+    {
+        UnitSelector.Instance.OnSelectedUnitChange -= UnitSelector_OnSelectedUnitChange; //unsubscribing from event when enemy is destroyed so no compilation errors occur
+
+    }
 }
