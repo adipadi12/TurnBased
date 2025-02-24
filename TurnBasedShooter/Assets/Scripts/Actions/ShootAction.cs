@@ -5,7 +5,14 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    public event EventHandler OnShoot;
+    public event EventHandler<OnShootEventArgs> OnShoot;
+
+    public class OnShootEventArgs : EventArgs
+    {
+        public UnitMovement targetUnit;
+        public UnitMovement shootingUnit;
+    }
+
     private enum State
     {
         Aiming,
@@ -44,7 +51,7 @@ public class ShootAction : BaseAction
                     canShootBullet = false;
                 }
                 break;
-            case State.Cooloff:
+            case State.Cooloff: //state machine for firing system
                 
                 break;
         }
@@ -82,7 +89,12 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        OnShoot?.Invoke(this, EventArgs.Empty);
+        OnShoot?.Invoke(this, new OnShootEventArgs //using the extension made on the events args class to implement shooting
+        {
+            targetUnit = targetUnit,
+            shootingUnit = unit
+        });
+
         targetUnit.Damage();
     }
 

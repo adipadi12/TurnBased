@@ -742,7 +742,7 @@ PrefabInstance:
     - target: {fileID: 3274997485194805515, guid: 8551fe8a0b673ea4ba0b0ec67c47fe0e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.96
+      value: 3.89
       objectReference: {fileID: 0}
     - target: {fileID: 3274997485194805515, guid: 8551fe8a0b673ea4ba0b0ec67c47fe0e,
         type: 3}
@@ -3102,6 +3102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: maxMoveDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932092923152841631, guid: 63cc26d39480f4249bc913f2c0783583,
+        type: 3}
+      propertyPath: isEnemy
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7187079273900220319, guid: 63cc26d39480f4249bc913f2c0783583,
         type: 3}

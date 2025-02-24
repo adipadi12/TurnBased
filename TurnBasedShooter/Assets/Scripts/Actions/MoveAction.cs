@@ -57,7 +57,7 @@ public class MoveAction : BaseAction
         ActionStart(onActionComplete);
         this.targetPos = LevelGrid.Instance.GetWorldPosition(gridPosition);
 
-        OnStartMoving?.Invoke(this, EventArgs.Empty);
+        OnStartMoving?.Invoke(this, EventArgs.Empty); //invoking this event 
     }
 
     
