@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class MoveAction : BaseAction
 {
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
+
+
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingValue = 0.1f;
     [SerializeField] private float rotateSpeed = 5f;
 
-    [SerializeField] private Animator animator;
+   //[SerializeField] private Animator animator; reference moved to unit animator class
 
     [SerializeField] private int maxMoveDistance = 4;
 
@@ -35,11 +39,12 @@ public class MoveAction : BaseAction
 
             transform.position += moveDir * moveSpeed * Time.deltaTime; //updating transform.positon frame independently
 
-            animator.SetBool("isWalking", true);
         }
         else
         {
-            animator.SetBool("isWalking", false);
+
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
+
             ActionComplete(); //so the logic of no active actions present works here as well
         }
 
@@ -51,6 +56,8 @@ public class MoveAction : BaseAction
     {
         ActionStart(onActionComplete);
         this.targetPos = LevelGrid.Instance.GetWorldPosition(gridPosition);
+
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
     }
 
     
