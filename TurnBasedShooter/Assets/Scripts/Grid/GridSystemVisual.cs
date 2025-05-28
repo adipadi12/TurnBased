@@ -19,7 +19,8 @@ public class GridSystemVisual : MonoBehaviour
         White, //default colour
         Red, //for invalid positions
         Green, //for valid positions
-        Yellow //for selected positions
+        Yellow, //for selected positions
+        RedSoft,
     }
 
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
@@ -71,6 +72,31 @@ public class GridSystemVisual : MonoBehaviour
         }
     }
 
+    private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType)
+    {
+        List<GridPosition> gridPositionList = new List<GridPosition>(); //getting the grid position list in range from the level grid
+        for (int x = -range; x < range; x++)
+        {
+            for (int z = -range; z <= range ; z++)
+            {
+                GridPosition testGridPosition = gridPosition + new GridPosition(x, z); //adding the x offset to the grid position
+
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) //checking if the grid position is valid
+                {
+                    continue;
+                }
+
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > range)
+                {
+                    continue;
+                }
+
+                gridPositionList.Add(testGridPosition); //adding the grid position to the list if it is valid and in range
+            }
+        }
+        ShowGridPositionList(gridPositionList, gridVisualType); //showing the grid position list with the specified grid visual type
+    }
     public void ShowGridPositionList(List<GridPosition> gridPositionList, GridVisualType gridVisualColourType)
     {
         foreach (GridPosition gridPosition in gridPositionList)
@@ -83,6 +109,7 @@ public class GridSystemVisual : MonoBehaviour
     {
         HideAllGridPosition();
 
+        UnitMovement unit = UnitSelector.Instance.GetSelectedUnit(); //getting the selected unit from the unit selector instance
         BaseAction selectedAction = UnitSelector.Instance.GetSelectedAction(); //referencing the unit outside of this class so selected unit can be called below
 
         GridVisualType gridVisualColourType;
@@ -97,8 +124,14 @@ public class GridSystemVisual : MonoBehaviour
                 break;
             case ShootAction shootAction:
                 gridVisualColourType = GridVisualType.Red; //default colour for shoot action
-                break;
+                
+                ShowGridPositionRange(
+                    unit.GetGridPosition(), //getting the grid position of the unit
+                    shootAction.GetMaxShootDistance(), //getting the max shoot range of the shoot action
+                    GridVisualType.RedSoft //using a soft red colour for the range
+                ); //showing the valid action grid position list for the shoot action
 
+                break;
         }
         ShowGridPositionList(selectedAction.GetValidActionGridPositionList(),
             gridVisualColourType

@@ -483,8 +483,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystemVisualSinglePrefab: {fileID: 1475467466107632540, guid: d6ef8accae407c942be120cbe7c84ad8,
     type: 3}
-  gridVisualSinglePrefab: {fileID: 1475467466107632540, guid: d6ef8accae407c942be120cbe7c84ad8,
-    type: 3}
   gridVisualTypeMaterialList:
   - gridVisualColourType: 0
     material: {fileID: 2100000, guid: e51c6c391297b0f43b8685134c661d3a, type: 2}
@@ -494,6 +492,8 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: a39ccdc236f10a04ba1d79c503ae78e8, type: 2}
   - gridVisualColourType: 3
     material: {fileID: 2100000, guid: fc062f56440ecf446ae1007091b39f51, type: 2}
+  - gridVisualColourType: 4
+    material: {fileID: 2100000, guid: fef4375a44fb93d4cb7de2e1c453990b, type: 2}
 --- !u!4 &327160118
 Transform:
   m_ObjectHideFlags: 0
