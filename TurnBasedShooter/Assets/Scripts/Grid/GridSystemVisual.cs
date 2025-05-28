@@ -36,6 +36,8 @@ public class GridSystemVisual : MonoBehaviour
                 gridSystemVisualSingleArray[x, z] = gridSystemVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
             }
         }
+
+        UnitActionSystemUI
     }
 
     private void Update()
