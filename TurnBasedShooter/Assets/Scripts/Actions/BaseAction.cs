@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour //doesn't allow creating instances of class using abstract. we only want of children
 {
+    public static event EventHandler OnAnyActionStarted; //static so that it can be accessed without instantiating the class. EventHandler is a delegate type that defines a method signature for handling events.
+    public static event EventHandler OnAnyActionCompleted; //event for when any action is completed
+
+
     protected UnitMovement unit; //no external classes can touch but classes that our extensions of this can
 
     protected bool isActive;
@@ -37,11 +41,20 @@ public abstract class BaseAction : MonoBehaviour //doesn't allow creating instan
     {
         isActive = true;
         this.onActionComplete = onActionComplete;
+
+        OnAnyActionStarted?.Invoke(this, EventArgs.Empty); //if any action started then invoke the event
     }
 
     protected void ActionComplete()
     {
         isActive = false;
         onActionComplete();
+
+        OnAnyActionCompleted?.Invoke(this, EventArgs.Empty); //if any action completed then invoke the event
+    }
+
+    public UnitMovement GetUnit() //to get the unit that this action is attached to
+    {
+        return unit;
     }
 }

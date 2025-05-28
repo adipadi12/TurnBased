@@ -27,8 +27,8 @@ public class SpinAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete) //grid position isn't used but since it is abstract in the base class and overriden here
     {
-        ActionStart(onActionComplete);
         totalSpinAmount = 0f;
+        ActionStart(onActionComplete);
     }
 
     public override string GetActionName()
