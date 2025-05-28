@@ -41,8 +41,9 @@ public class UnitMovement : MonoBehaviour
         if (newGridPosition != gridPosition)//for this reason had to define streuct in GridPosition.cs
         {
             //Unit changed Grid Position
-            LevelGrid.Instance.UnitMovedGridPosition(this, gridPosition, newGridPosition);
+            GridPosition oldGridPosition = gridPosition; //store the old grid position before changing it
             gridPosition = newGridPosition;
+            LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition);
         }
 
 

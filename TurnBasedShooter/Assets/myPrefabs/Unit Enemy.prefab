@@ -13,6 +13,21 @@ PrefabInstance:
       propertyPath: health
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 3085173952754210276, guid: 63cc26d39480f4249bc913f2c0783583,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.49574804
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085173952754210276, guid: 63cc26d39480f4249bc913f2c0783583,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085173952754210276, guid: 63cc26d39480f4249bc913f2c0783583,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5346605899079909506, guid: 63cc26d39480f4249bc913f2c0783583,
         type: 3}
       propertyPath: ragdollPrefab

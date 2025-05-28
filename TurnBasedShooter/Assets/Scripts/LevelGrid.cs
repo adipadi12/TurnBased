@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LevelGrid : MonoBehaviour
 {
+    public event EventHandler OnAnyUnitMovedInGridPosition; //event to notify when any unit is moved in the grid position
     public static LevelGrid Instance { get; private set; } //property used to separate get and set and pascal case used here
 
     [SerializeField] private Transform gridDebugObjectPrefab;
@@ -48,6 +51,8 @@ public class LevelGrid : MonoBehaviour
     {
         RemoveUnitAtGridPosition(fromGridPosiiton,unit);
         AddUnitAtGridPos(toGridPosition, unit);
+
+        OnAnyUnitMovedInGridPosition?.Invoke(this, EventArgs.Empty); //null conditional operator to check if there are any subscribers to the event
     }
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition); //lambda expression
     //same as 
