@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 public class UnitMovement : MonoBehaviour
 {
     public static event EventHandler OnAnyActionPointsChanged;
+    public static event EventHandler OnAnyUnitSpawned;
+    public static event EventHandler OnAnyUnitDead;
 
     private const int ACTION_POINTS_MAX = 2;
 
@@ -33,6 +35,8 @@ public class UnitMovement : MonoBehaviour
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
 
         healthSystem.OnDead += HealthSystem_OnDead;
+
+        OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty); //invoking this event when a unit is spawned
     }
     private void Update()
     {
@@ -139,5 +143,7 @@ public class UnitMovement : MonoBehaviour
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this); //removes the unit from the grid
 
         Destroy(gameObject);
+
+        OnAnyUnitDead?.Invoke(this, EventArgs.Empty); //invoking this event when a unit dies
     }
 }
