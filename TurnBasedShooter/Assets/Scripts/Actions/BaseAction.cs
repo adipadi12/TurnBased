@@ -57,4 +57,28 @@ public abstract class BaseAction : MonoBehaviour //doesn't allow creating instan
     {
         return unit;
     }
+
+    public EnemyAIAction GetBestEnemyAIAction()
+    {
+        List<EnemyAIAction> enemyAIActionsList = new List<EnemyAIAction>();
+
+        List<GridPosition> validActionsGridPositionList = GetValidActionGridPositionList();
+
+        foreach (GridPosition gridPosition in validActionsGridPositionList)
+        {
+            EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPosition);
+            enemyAIActionsList.Add(enemyAIAction);
+        }
+        if (enemyAIActionsList.Count > 0)
+        {
+            enemyAIActionsList.Sort((EnemyAIAction a, EnemyAIAction b) => b.actionValue - a.actionValue); //sorts the list in descending order based on action value
+            return enemyAIActionsList[0];
+        }
+        else
+        {
+            return null; //if no actions available then return null
+        }
+    }
+
+    public abstract EnemyAIAction GetEnemyAIAction(GridPosition gridPosition); //this will be implemented in the child classes to return the best action for the enemy AI at that grid position
 }

@@ -15,6 +15,7 @@ public class UnitMovement : MonoBehaviour
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     private MoveAction moveAction;
+    private ShootAction shootAction; 
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
@@ -24,6 +25,7 @@ public class UnitMovement : MonoBehaviour
     {
         healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
+        shootAction = GetComponent<ShootAction>();
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
@@ -65,6 +67,11 @@ public class UnitMovement : MonoBehaviour
     public MoveAction GetMoveAction()
     {
         return moveAction;
+    }
+
+    public ShootAction GetShootAction()
+    {
+        return shootAction;
     }
 
     public SpinAction GetSpinAction()
@@ -144,6 +151,11 @@ public class UnitMovement : MonoBehaviour
 
         Destroy(gameObject);
 
-        OnAnyUnitDead?.Invoke(this, EventArgs.Empty); //invoking this event when a unit dies
+        OnAnyUnitDead?.Invoke(this, EventArgs.Empty); //invoking this event when a unit diesf
+    }
+
+    public float GetHealthNormalized()
+    {
+        return healthSystem.GetNormalizedHealth();
     }
 }

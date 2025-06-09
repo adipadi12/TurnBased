@@ -86,23 +86,41 @@ public class EnemyAI : MonoBehaviour
 
     private bool TryTakeEnemyAIAction(UnitMovement enemyUnit, Action onEnemyAiActionComplete)
     {
-        Debug.Log("Taking action for enemy unit: " + enemyUnit.name);
-        SpinAction spinAction = enemyUnit.GetSpinAction();
+        EnemyAIAction bestEnemyAIAction = null; // Initialize the best action to null
+        BaseAction bestBaseAction = null; // Initialize the best base action to null
 
-        GridPosition actionGridPosition = enemyUnit.GetGridPosition(); // Get the grid position of the enemy unit
+        foreach (BaseAction baseAction in enemyUnit.GetBaseActionArray())
+        {
+            if (!enemyUnit.CanSpendActionPointsToTakeAction(baseAction)) //checking if unit has enough points to spend on a particular action
+            {
+                continue; // If the unit cannot spend action points for this action, skip to the next action
+            }
 
-        if (!spinAction.IsValidActionGridPosition(actionGridPosition))
+            if (bestEnemyAIAction == null)
+            {
+                bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                bestBaseAction = baseAction; // Store the best base action if it's the first one found
+            }
+
+            else
+            {
+                EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction(); // Get the best action for the enemy AI from the base action
+                if ((testEnemyAIAction != null) && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
+                {
+                    bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    bestBaseAction = baseAction; // Update the best base action if a better action is found
+                }
+            }
+        }
+
+        if (bestEnemyAIAction != null && enemyUnit.TrySpendActionPointsToTakeAction(bestBaseAction))
+        {
+            bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition, onEnemyAiActionComplete); // Use the best action's grid position to take the action
+            return true; // Action was successfully taken
+        }
+        else
         {
             return false;
         }
-
-        if (!enemyUnit.TrySpendActionPointsToTakeAction(spinAction)) //checking if unit has enough points to spend on a particular action
-        {
-            return false;
-        }
-
-        Debug.Log("Doing Spin Action");
-        spinAction.TakeAction(actionGridPosition, onEnemyAiActionComplete); //method using generic tick action
-        return true; // Action was successfully taken
     }
 }

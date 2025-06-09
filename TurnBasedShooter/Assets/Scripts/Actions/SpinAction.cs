@@ -49,4 +49,14 @@ public class SpinAction : BaseAction
     {
         return 1;
     }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    {
+        // Spin action does not have a specific enemy AI action, so we return null or an empty action.
+        return new EnemyAIAction
+        {
+            gridPosition = gridPosition,
+            actionValue = 0, // or some default value
+        };
+    }
 }
