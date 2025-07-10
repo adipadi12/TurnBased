@@ -11,14 +11,10 @@ public class LevelGrid : MonoBehaviour
 
     [SerializeField] private Transform gridDebugObjectPrefab;
 
-    private GridSys gridSystem;
+    private GridSys<GridObj> gridSystem;
 
     private void Awake()
     {
-        gridSystem = new GridSys(10, 10, 2f); //calling the gridsys constructor here for testing since this script is attached to a game object
-        //and follow MonoBehavior
-        gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
-
         if (Instance != null)
         {
             Debug.Log("There's more than one LevelGrid!!!! " + transform + " - " + Instance);
@@ -27,6 +23,11 @@ public class LevelGrid : MonoBehaviour
         }
 
         Instance = this;
+
+        gridSystem = new GridSys<GridObj>(10, 10, 2f,
+            (GridSys<GridObj> g, GridPosition gridPosition) => new GridObj(g, gridPosition)); //calling the gridsys constructor here for testing since this script is attached to a game object
+                                                                                      //and follow MonoBehavior
+        //gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 
     public void AddUnitAtGridPos(GridPosition gridPosition, UnitMovement unit)

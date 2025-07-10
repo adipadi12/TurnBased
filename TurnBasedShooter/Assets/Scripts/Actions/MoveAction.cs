@@ -104,7 +104,7 @@ public class MoveAction : BaseAction
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        int targetCountAtGridPosition = unit.GetShootAction().GetTargetCount(gridPosition); 
+        int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCount(gridPosition); 
         // Spin action does not have a specific enemy AI action, so we return null or an empty action.
         return new EnemyAIAction
         {

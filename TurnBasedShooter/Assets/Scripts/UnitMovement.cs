@@ -14,9 +14,6 @@ public class UnitMovement : MonoBehaviour
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
-    private MoveAction moveAction;
-    private ShootAction shootAction; 
-    private SpinAction spinAction;
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
 
@@ -24,11 +21,9 @@ public class UnitMovement : MonoBehaviour
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-        moveAction = GetComponent<MoveAction>();
-        shootAction = GetComponent<ShootAction>();
-        spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
+
     private void Start()
     {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
@@ -64,19 +59,16 @@ public class UnitMovement : MonoBehaviour
 
     }
 
-    public MoveAction GetMoveAction()
+    public T GetAction<T>() where T : BaseAction
     {
-        return moveAction;
-    }
-
-    public ShootAction GetShootAction()
-    {
-        return shootAction;
-    }
-
-    public SpinAction GetSpinAction()
-    {
-        return spinAction;
+        foreach (BaseAction baseAction in baseActionArray)
+        {
+            if (baseAction is T) //checking if the base action is of type T
+            {
+                return (T)baseAction; //returning the base action as type T
+            }
+        }
+        return null; //if no action found then return null
     }
 
     public GridPosition GetGridPosition()

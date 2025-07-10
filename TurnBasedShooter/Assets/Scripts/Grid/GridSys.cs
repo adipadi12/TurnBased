@@ -1,27 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class GridSys //Monobehavior removed because we need constructor for grid system. can't be done when monobehav present
+public class GridSys<TGridObject> //Monobehavior removed because we need constructor for grid system. can't be done when monobehav present
 {
     private int width;
     private int height;
     private float cellSize;
-    private GridObj[,] gridObjectArray; //creating a 2D array
-    public GridSys(int width, int height, float cellSize) //constructor to create an object. done by monobehavior using unity but we make our own here
-    {
+    private TGridObject[,] gridObjectArray; //creating a 2D array
+    public GridSys(int width, int height, float cellSize, Func<GridSys<TGridObject>, GridPosition, TGridObject> createGridObject) //constructor to create an object. done by monobehavior using unity but we make our own here
+    { //bypassing C# limitations by using Func delegate to create a grid object. 
         this.width = width;
         this.height = height;
         this.cellSize = cellSize; //this keyword used for referencing each instance of variable relevant to this class
 
-        gridObjectArray = new GridObj[width, height]; //defined that 2D array with our width and height
+        gridObjectArray = new TGridObject[width, height]; //defined that 2D array with our width and height
 
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x,z);
-                gridObjectArray[x,z] =  new GridObj(this, gridPosition); //this being grid system. as the constructor was defined in the GridObj script
+                gridObjectArray[x,z] =  createGridObject(this, gridPosition); //this being grid system. as the constructor was defined in the TGridObject script
                 //Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z) + Vector3.right * 0.2f, Color.blue, 1000f); //drawing lines in debug mode inside a for loop
                 //with width & height as params and an offset of till where you want the line to be drawn
             }
@@ -50,12 +51,12 @@ public class GridSys //Monobehavior removed because we need constructor for grid
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity); //identity means no roatation
                     //here Instantiate cannot be directly used because the class is inherited from MonoBehavior
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();  //getting the grid debug object component
-                gridDebugObject.SetGridObject(GetGridObj(gridPosition));   //setting grid object as get grid object's object position
+                gridDebugObject.SetGridObject(GetGridObj(gridPosition) as GridObj);   //setting grid object as get grid object's object position
             }
         }
     }
 
-    public GridObj GetGridObj(GridPosition gridPosition)
+    public TGridObject GetGridObj(GridPosition gridPosition)
     {
         return gridObjectArray[gridPosition.x, gridPosition.z];  //getting the grid object to get us the x and z position for debugging
     }

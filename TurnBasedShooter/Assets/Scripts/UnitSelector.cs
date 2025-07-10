@@ -147,7 +147,8 @@ public class UnitSelector : MonoBehaviour
     private void SetSelectedUnit(UnitMovement unit)
     {
         selectedUnit = unit;
-        SetSelectedAction(unit.GetMoveAction());
+
+        SetSelectedAction(unit.GetAction<MoveAction>());
         
         OnSelectedUnitChange?.Invoke(this, EventArgs.Empty); //? checks if null or not and then the event is invoked. does same shit as below 4 lines
         //does not care if ay event is subscribed to it or not
