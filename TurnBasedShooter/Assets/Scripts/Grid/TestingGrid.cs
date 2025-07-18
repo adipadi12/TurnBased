@@ -7,20 +7,25 @@ public class TestingGrid : MonoBehaviour
     [SerializeField] private UnitMovement unit;
     private void Start()
     {
-     //   gridSystem = new GridSys(10,10, 2f); //calling the gridsys constructor here for testing since this script is attached to a game object
-     //   //and follow MonoBehavior
-     //   gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
-     ////   Debug.Log(new GridPosition(5, 7));
+    
     }
 
     private void Update()
     {
-        //Debug.Log(gridSystem.GetGridPosition(MouseWorldPos.GetPosition())); //calling the function to getGridPosition of where the mouse is in the world
         if (Input.GetKeyDown(KeyCode.T))
         {
-            GridSystemVisual.Instance.HideAllGridPosition();
-            //GridSystemVisual.Instance.ShowGridPositionList(
-            //    unit.GetMoveAction().GetValidActionGridPositionList(), GridSystemVisual.GridVisualType.White );
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorldPos.GetPosition());
+            GridPosition startGridPosition = new GridPosition(0, 0);
+
+            List<GridPosition> gridPositionList = Pathfinding.Instance.FindPath(startGridPosition, mouseGridPosition);
+
+            for (int i = 0; i < gridPositionList.Count; i++)
+            {
+                Debug.DrawLine(LevelGrid.Instance.GetWorldPosition(gridPositionList[i]),
+                               LevelGrid.Instance.GetWorldPosition(gridPositionList[i+1]),
+                               Color.black,
+                               10f);
+            }
         }
     }
 }
