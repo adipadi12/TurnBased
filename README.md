@@ -10,3 +10,5 @@ game made on unity
 to reference out Event action
 5. need to invest more time learning events and the singleton pattern
 6. references to different scripts made inside classes to make refactoring code easy
+
+![2025-08-26 22-37-21](https://github.com/user-attachments/assets/da1e27f4-25ba-40d0-a739-1637de7968ad)
